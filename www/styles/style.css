@@ -1,0 +1,14 @@
+/* Empty. Add your own CSS if you like */
+.bcenter {
+  left:0;
+  right:0;
+}
+.tcenter {
+  margin: auto;
+  text-align: center;
+}
+
+.big-padding {
+  padding-top: 40px;
+  padding-bottom: 40px;
+}

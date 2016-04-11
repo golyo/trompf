@@ -1,0 +1,16 @@
+node_modules
+www/bower_components
+coverage
+platforms
+plugins
+resources
+hooks
+.idea
+.temp
+.sass-cache
+*.swp
+*.swo
+*.log
+*.DS_Store
+
+app/scripts/configuration.js

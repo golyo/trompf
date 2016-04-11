@@ -1,0 +1,13 @@
+<ion-view view-title="Leckék">
+  <ion-content>
+    <ion-list>
+      <div ng-repeat="type in lessonTypes">
+        <div class="item item-divider">{{type.type}}</div>
+        <ion-item class="item-remove-animate item-icon-right" ng-repeat="lesson in type.lessons" type="item-text-wrap" href="#/tab/lessons/settings/{{lesson.id}}">
+          <i class="icon ion-chevron-right {{lesson.icon}}"></i>
+          <h2>{{lesson.name}}</h2>
+        </ion-item>
+      </div>
+    </ion-list>
+  </ion-content>
+</ion-view>
