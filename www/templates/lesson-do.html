@@ -5,18 +5,15 @@
       <div class="item item-text-wrap tcenter big-padding" ng-bind-html="exercise.html">
       </div>
       <div class="item-divider">
-        <div class="row row-center">
-          <div class="col col-center tcenter">
-            <button ng-click="prev()" ng-disabled="actIdx==0" class="button button-positive" >Előző</button>
-          </div>
-          <div class="col" ng-repeat="choice in exercise.choices">
-
-            <ion-checkbox class="small" ng-model="choice.answer"><span style="float:right;">({{getChar($index)}})</span>{{choice.val}}</ion-checkbox>
-          </div>
-          <div class="col col-center tcenter">
-            <button ng-click="next()" ng-show="actIdx+1<lesson.exercises.length" class="button button-positive">Következő</button>
-            <button ng-click="finish()" ng-show="actIdx+1==lesson.exercises.length" class="button button-positive">Befejez</button>
-          </div>
+        <ion-list>
+          <ion-checkbox ng-repeat="choice in exercise.choices" ng-model="choice.answer" ng-click="select(choice)">
+            <span style="position:absolute;left:4px;top:14px;z-index:10;">{{getChar($index)}})</span>{{choice.val}}
+          </ion-checkbox>
+        </ion-list>
+        <div class="button-bar">
+          <button ng-click="prev()" ng-disabled="actIdx==0" class="button button-positive" style="">Előző</button>
+          <button ng-click="next()" ng-disabled="actIdx+1==lesson.exercises.length" class="button button-positive">Következő</button>
+          <button ng-click="finish()" class="button button-positive">Befejez</button>
         </div>
       </div>
     </div>

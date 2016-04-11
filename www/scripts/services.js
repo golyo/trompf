@@ -11,6 +11,17 @@ angular.module('starter.services', ['ngCookies'])
   };
 })
 
+.factory('Selected', function($cookieStore) {
+  return {
+    get: function(key) {
+      return $cookieStore.get('trompf_' + key);
+    },
+    save: function(key, settings) {
+      return $cookieStore.put('trompf_', settings);
+    }
+  };
+})
+
 .factory('Lessons', function(Settings) {
   var _types;
   var initTypes = function() {
@@ -38,7 +49,7 @@ angular.module('starter.services', ['ngCookies'])
       return _types;
     },
     getDefinition: function(id) {
-      initTypes();
+      //initTypes();
       for (var i=0; i<_types.length; i++) {
         var t = _types[i];
         for (var j=0; j<t.lessons.length; j++) {
@@ -54,7 +65,7 @@ angular.module('starter.services', ['ngCookies'])
       var generator = Generator[id];
       if (generator) {
         var settings = Settings.get(id) || generator.defaultSettings;
-        var lesson = {"id" : generator.id, "type": generator.type, "name" : generator.name, exercises: []};
+        var lesson = {"id" : generator.id, "type": generator.type, "name" : generator.name, "multipleAnswers" : generator.multipleAnswers, exercises: []};
         for (var i=0; i<settings.no; i++) {
           lesson.exercises.push(generator.generate(settings));
         }

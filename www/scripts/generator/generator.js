@@ -16,7 +16,7 @@ GeneratorUtil = {
   },
   rndResults : function(max, min, result, no) {
     var r = [];
-    var minusNo = Math.min(GeneratorUtil.rnd(no), result/2);
+    var minusNo = Math.min(GeneratorUtil.rnd(no), Math.floor(result/2));
     var act = result;
     for (var i=0; i<minusNo; i++) {
       var act = act-GeneratorUtil.rnd(1,3);
@@ -26,6 +26,9 @@ GeneratorUtil = {
     for (var i=0; i<no-minusNo; i++) {
       var act = act+GeneratorUtil.rnd(1,3);
       r.push({'val': act, 'isOk': false});
+    }
+    if (r.length == 4) {
+      console.log(minusNo + "?" + no);
     }
     return GeneratorUtil.shuffle(r);
   },
@@ -70,13 +73,13 @@ Generator.Addition = {
     var exercise;
     if (idx == 0) {
       exercise = GeneratorUtil.createExerciseChoices(settings, r-a);
-      exercise.html = "[] + " + a + " = " + r;
+      exercise.html = "[ ] + " + a + " = " + r;
     } else if (idx == 1) {
       exercise = GeneratorUtil.createExerciseChoices(settings, r-a);
-      exercise.html = a + " + [] = " + r;
+      exercise.html = a + " + [ ] = " + r;
     } else {
       exercise = GeneratorUtil.createExerciseChoices(settings, r);
-      exercise.html = a + " + " + (r-a) + " = []";
+      exercise.html = a + " + " + (r-a) + " = [ ]";
     }
     return exercise;
   }
@@ -107,13 +110,13 @@ Generator.Subtraction = {
     var exercise;
     if (idx == 0) {
       exercise = GeneratorUtil.createExerciseChoices(settings, r);
-      exercise.html = "[] - " + a + " = " + (r-a);
+      exercise.html = "[ ] - " + a + " = " + (r-a);
     } else if (idx == 1) {
       exercise = GeneratorUtil.createExerciseChoices(settings, r-a);
-      exercise.html = r + " - [] = " + a;
+      exercise.html = r + " - [ ] = " + a;
     } else {
       exercise = GeneratorUtil.createExerciseChoices(settings, r-a);
-      exercise.html = r + " - " + a + " = []";
+      exercise.html = r + " - " + a + " = [ ]";
     }
     return exercise;
   }
@@ -144,13 +147,13 @@ Generator.Multiple = {
     var exercise;
     if (idx == 0) {
       exercise = GeneratorUtil.createExerciseChoices(settings, a);
-      exercise.html = "[] * " + b + " = " + (a*b);
+      exercise.html = "[ ] * " + b + " = " + (a*b);
     } else if (idx == 1) {
       exercise = GeneratorUtil.createExerciseChoices(settings, b);
-      exercise.html = a + " * [] = " + (a*b);
+      exercise.html = a + " * [ ] = " + (a*b);
     } else {
       exercise = GeneratorUtil.createExerciseChoices(settings, a*b);
-      exercise.html = a + " * " + b + " = []";
+      exercise.html = a + " * " + b + " = [ ]";
     }
     return exercise;
   }
@@ -181,13 +184,13 @@ Generator.Divide = {
     var exercise;
     if (idx == 0) {
       exercise = GeneratorUtil.createExerciseChoices(settings, a*b);
-      exercise.html = "[] / " + b + " = " + a;
+      exercise.html = "[ ] / " + b + " = " + a;
     } else if (idx == 1) {
       exercise = GeneratorUtil.createExerciseChoices(settings, b);
-      exercise.html = (a*b) + " / [] = " + a;
+      exercise.html = (a*b) + " / [ ] = " + a;
     } else {
       exercise = GeneratorUtil.createExerciseChoices(settings, b);
-      exercise.html = (a*b) + " / " + a + " = []";
+      exercise.html = (a*b) + " / " + a + " = [ ]";
     }
     return exercise;
   }

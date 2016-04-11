@@ -67,7 +67,7 @@ angular.module('starter', ['ionic', 'ngCookies', 'dynform', 'starter.controllers
   .state('tab.dash', {
     url: '/dash',
     views: {
-      'tab-dash': {
+        'tab-dash': {
         templateUrl: 'templates/tab-dash.html',
         controller: 'DashCtrl'
       }
@@ -77,27 +77,36 @@ angular.module('starter', ['ionic', 'ngCookies', 'dynform', 'starter.controllers
   .state('tab.lessons', {
     url: '/lessons',
     views: {
-      'tab-lessons': {
+        'tab-lessons': {
         templateUrl: 'templates/tab-lessons.html',
         controller: 'LessonsCtrl'
       }
     }
   })
   .state('tab.lesson-settings', {
+    url: '/lessons/settings/:lessonId',
+    views: {
+        'tab-lessons': {
+        templateUrl: 'templates/lesson-settings.html',
+        controller: 'LessonSettingsCtrl'
+      }
+    }
+  })
+  .state('tab.lesson-do', {
     url: '/lessons/do/:lessonId',
     views: {
-      'tab-lessons': {
+        'tab-lessons': {
         templateUrl: 'templates/lesson-do.html',
         controller: 'LessonDoCtrl'
       }
     }
   })
-  .state('tab.lesson-do', {
-    url: '/lessons/settings/:lessonId',
+  .state('tab.lesson-result', {
+    url: '/lessons/result',
     views: {
-      'tab-lessons': {
-        templateUrl: 'templates/lesson-settings.html',
-        controller: 'LessonSettingsCtrl'
+        'tab-lessons': {
+        templateUrl: 'templates/lesson-result.html',
+        controller: 'LessonResultCtrl'
       }
     }
   })

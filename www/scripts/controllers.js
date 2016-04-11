@@ -42,7 +42,7 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('LessonDoCtrl', function($rootScope, $scope, $stateParams, Lessons, Settings) {
+.controller('LessonDoCtrl', function($rootScope, $scope, $stateParams, $location, Lessons, Settings) {
   var setActual = function(idx) {
     $scope.actIdx = idx;
     $scope.exercise = $scope.lesson.exercises[idx];
@@ -58,10 +58,24 @@ angular.module('starter.controllers', [])
 	  setActual($scope.actIdx+1);
 	}
 	$scope.finish = function() {
-	  //setActual($scope.actIdx+1);
+	  $location.path('/tab/lessons/result');
+	}
+	$scope.select = function(choice) {
+    if (!$scope.lesson.multipleAnswers) {
+      for (var i=0; i<$scope.exercise.choices.length; i++) {
+        $scope.exercise.choices[i].answer = choice.val == $scope.exercise.choices[i].val;
+      }
+      if ($scope.actIdx+1<$scope.lesson.exercises.length) {
+        $scope.next();
+      }
+    }
 	}
 	setActual(0);
   $rootScope.startTimer(120, $scope.finish);
+})
+
+.controller('LessonResultCtrl', function($scope, $rootScope, Lessons) {
+  console.log($scope.exercise);
 })
 
 
