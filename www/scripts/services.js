@@ -23,10 +23,10 @@ angular.module('starter.services', ['ngCookies'])
 })
 
 .factory('Lessons', function(Settings) {
-  var _types;
-  var initTypes = function() {
-    if (!_types) {
-      console.log("init Types");
+  var Lessons = {
+    selectedLesson : null,
+    types : [],
+    initialize : function() {
       var typesMap = {};
       for (var key in Generator) {
         var g = Generator[key];
@@ -37,21 +37,18 @@ angular.module('starter.services', ['ngCookies'])
         }
         impl.push({"name" : g.name, "id" : key});
       }
-      _types = [];
+      Lessons.types = [];
       for (var key in typesMap) {
-        _types.push({"type" : key, "lessons":typesMap[key] });
+        Lessons.types.push({"type" : key, "lessons":typesMap[key] });
       }
-    }
-  };
-  return {
-    all: function() {
-      initTypes();
-      return _types;
     },
-    getDefinition: function(id) {
-      //initTypes();
-      for (var i=0; i<_types.length; i++) {
-        var t = _types[i];
+    all : function() {
+      console.log("getAll")
+      return Lessons.types;
+    },
+    getDefinition : function(id) {
+      for (var i=0; i<Lessons.types.length; i++) {
+        var t = Lessons.types[i];
         for (var j=0; j<t.lessons.length; j++) {
           var g = t.lessons[j];
           if (g.id==id) {
@@ -61,18 +58,41 @@ angular.module('starter.services', ['ngCookies'])
       }
       return null;
     },
-    getLesson: function(id) {
+    generate : function(id) {
       var generator = Generator[id];
       if (generator) {
         var settings = Settings.get(id) || generator.defaultSettings;
-        var lesson = {"id" : generator.id, "type": generator.type, "name" : generator.name, "multipleAnswers" : generator.multipleAnswers, exercises: []};
+        var lesson = {"id" : id, "type": generator.type, "name" : generator.name, "multipleAnswers" : generator.multipleAnswers, exercises: []};
         for (var i=0; i<settings.no; i++) {
           lesson.exercises.push(generator.generate(settings));
         }
+        Lessons.selectedLesson = lesson;
         return lesson;
+      }
+    },
+    getLesson: function() {
+      return Lessons.selectedLesson;
+    },
+    getResult: function() {
+      var successNo = 0;
+      for (var i=0; i<Lessons.selectedLesson.exercises.length; i++) {
+        var ex = Lessons.selectedLesson.exercises[i];
+        var success = true;
+        for (var j=0; j<ex.choices.length; j++) {
+          success = success && (ex.choices[i].answer==ex.choices[i].isOk);
+        }
+        if (success) {
+          successNo++;
+        }
+      }
+      return {
+        "successNo": successNo,
+        "failedNo":failedNo
       }
     }
   };
+  Lessons.initialize();
+  return Lessons;
 })
 
 .factory('Chats', function() {

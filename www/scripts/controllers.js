@@ -38,16 +38,17 @@ angular.module('starter.controllers', [])
   $scope.submitClass="button button-block button-positive";
   $scope.processForm = function() {
     Settings.save($scope.lesson.id, $scope.formData);
-    $location.path('/tab/lessons/do/' + $scope.lesson.id);
+    Lessons.generate($scope.lesson.id);
+    $location.path('/tab/lessons/do/');
   };
 })
 
-.controller('LessonDoCtrl', function($rootScope, $scope, $stateParams, $location, Lessons, Settings) {
+.controller('LessonDoCtrl', function($rootScope, $scope, $location, Lessons, Settings) {
   var setActual = function(idx) {
     $scope.actIdx = idx;
     $scope.exercise = $scope.lesson.exercises[idx];
   }
-  $scope.lesson = Lessons.getLesson($stateParams.lessonId);
+  $scope.lesson = Lessons.getLesson();
 	$scope.getChar = function(idx) {
 		return String.fromCharCode(97 + idx);
 	};
@@ -75,7 +76,7 @@ angular.module('starter.controllers', [])
 })
 
 .controller('LessonResultCtrl', function($scope, $rootScope, Lessons) {
-  console.log($scope.exercise);
+  $scope.lesson = Lessons.getLesson();
 })
 
 

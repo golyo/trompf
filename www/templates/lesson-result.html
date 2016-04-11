@@ -1,5 +1,8 @@
 <ion-view view-title="Ellenőrzés">
   <ion-content class="padding">
-Alma
+
+    <div class="card" ng-repeat="exercise in lesson.exercises">
+      <div class="item item-divider tcenter"><span style="float:right;">Idő: {{second}}</span>{{actIdx+1}}. Feladat</div>
+    </div>
   </ion-content>
 </ion-view>
