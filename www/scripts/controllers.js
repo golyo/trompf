@@ -42,7 +42,7 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('LessonDoCtrl', function($scope, $stateParams, Lessons, Settings) {
+.controller('LessonDoCtrl', function($rootScope, $scope, $stateParams, Lessons, Settings) {
   var setActual = function(idx) {
     $scope.actIdx = idx;
     $scope.exercise = $scope.lesson.exercises[idx];
@@ -57,7 +57,11 @@ angular.module('starter.controllers', [])
 	$scope.next = function() {
 	  setActual($scope.actIdx+1);
 	}
+	$scope.finish = function() {
+	  //setActual($scope.actIdx+1);
+	}
 	setActual(0);
+  $rootScope.startTimer(120, $scope.finish);
 })
 
 

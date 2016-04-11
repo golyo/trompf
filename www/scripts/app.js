@@ -7,7 +7,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'ngCookies', 'dynform', 'starter.controllers', 'starter.services'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, $rootScope, $interval) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -21,6 +21,30 @@ angular.module('starter', ['ionic', 'ngCookies', 'dynform', 'starter.controllers
       StatusBar.styleDefault();
     }
   });
+	$rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
+		console.log('$stateChangeSuccess on ' + toState.name);
+		$rootScope.resetTimer();
+	});
+	$rootScope.startTimer = function(second, callback) {
+		if (second > 0) {
+			$rootScope.resetTimer();
+			$rootScope.second = second;
+			$rootScope.timer = $interval(function() {
+				$rootScope.second = $rootScope.second-1;
+				if ($rootScope.second == 0) {
+					$rootScope.resetTimer();
+					callback();
+				}
+			}, 1000);
+			console.log("timer started");
+		}
+	};
+	$rootScope.resetTimer = function() {
+		if ($rootScope.timer) {
+			$interval.cancel($rootScope.timer);
+			$rootScope.timer == undefined;
+		}
+	};
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
